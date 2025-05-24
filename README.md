@@ -1,3 +1,51 @@
+## Installation
+
+For Ubuntu 20.04 and ROS Noetic:
+```bash
+
+sudo apt install python3-catkin-tools \
+libgoogle-glog-dev \
+ros-noetic-joy \
+ros-noetic-twist-mux \
+ros-noetic-interactive-marker-twist-server \
+ros-noetic-octomap-ros
+```
+
+
+Create the workspace:
+```bash
+mkdir -p gbplanner2_ws/src/
+cd gbplanner2_ws/src/
+```
+Clone the planner
+```bash
+git clone git@github.com:ntnu-arl/gbplanner_ros.git -b gbplanner2
+```
+
+Clone and update the required packages:
+```bash
+cd <path/to/gbplanner2_ws>
+wstool init
+wstool merge ./src/gbplanner_ros/packages_ssh.rosinstall
+wstool update
+```
+
+`Note: ./src/exploration/gbplanner_ros/packages_https.rosinstall can be used for https based urls.`
+
+Build:
+```bash
+catkin config -DCMAKE_BUILD_TYPE=Release
+catkin build
+```
+## Running
+
+```bash
+roslaunch gbplanner gbp_exploration.launch
+roslaunch exploration_eval marsim_run.launch
+```
+
+---
+
 # Graph-based Exploration Planner 2.0
 ![swag](img/cerberus_subt_winners.png)
 
