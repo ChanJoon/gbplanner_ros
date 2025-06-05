@@ -1,3 +1,29 @@
+## Build
+
+```
+cd <ws>/src
+git clone git@github.com:ChanJoon/gbplanner_ros.git -b gbplanner1
+wstool init
+wstool merge packages_https.rosinstall
+wstool merge
+```
+
+wstool 로 가져온 의존성 패키지들이 [예전 링크](https://github.com/ntnu-arl/gbplanner_ws/tree/noetic) 에서 가져와서 빌드 전에 아래 패키지 버전 수정 필요
+
+`rotors_gazebo_plugins`
+
+`add_definitions(-std=c++14)` 를 `add_definitions(-std=c++17)` 로 수정
+
+
+```
+catkin build -DCMAKE_BUILD_TYPE=Release -c
+```
+
+## Run with MARSIM
+
+---
+
+
 # gbplanner_ros
 Graph-based Exploration Planner for Subterranean Environments
 
