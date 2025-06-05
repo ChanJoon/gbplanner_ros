@@ -16,7 +16,7 @@ wstool 로 가져온 의존성 패키지들이 [예전 링크](https://github.co
 
 
 ```
-catkin build -DCMAKE_BUILD_TYPE=Release -c
+catkin build -DCMAKE_BUILD_TYPE=Release -DUSE_OCTOMAP=1 -c
 ```
 
 ## Run with MARSIM

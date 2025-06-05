@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(gbplanner)
 # Set OCTOMAP or VOXBLOX
-option(USE_OCTOMAP "Use OCTOMAP or VOXBLOX" 0)
+option(USE_OCTOMAP "Use OCTOMAP or VOXBLOX" 1)
 if (USE_OCTOMAP)
   add_definitions(-DUSE_OCTOMAP=${USE_OCTOMAP})
 endif (USE_OCTOMAP)
@@ -48,6 +48,13 @@ endif (USE_OCTOMAP)
 
 cs_add_executable(gbplanner_node src/gbplanner_ros_node.cpp)
 target_link_libraries(gbplanner_node ${PROJECT_NAME})
+
+catkin_install_python(PROGRAMS
+  scripts/traj_to_position_cmd_lookahead.py
+  scripts/auto_trigger.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 
 cs_install()
 cs_export(LIBRARIES)
