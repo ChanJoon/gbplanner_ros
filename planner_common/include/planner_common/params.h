@@ -117,6 +117,8 @@ struct SensorParamsBase {
   Eigen::Vector3d center_offset;  // Offset from the body center (odometry).
   Eigen::Vector3d rotations;      // Body to sensor; [Y, P, R] (rad).
   Eigen::Vector2d fov;            // [Horizontal, Vertical] angles (rad).
+  double fov_vertical_offset;     // Elevation of the vertical FOV's centre in the sensor frame (rad); 0 = symmetric
+                                  // (default). The band is [-fov[1]/2, fov[1]/2] + offset (kLidar only).
   Eigen::Vector2d resolution;  // Resolution in rad [H x V] for volumetric gain.
   std::string sensor_frame;
   Eigen::Vector2d rot_lims;    // Min and max rotation limits in rad for camera.

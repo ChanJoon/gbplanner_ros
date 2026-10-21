@@ -93,6 +93,11 @@ bool SensorParamsBase::loadParams(std::string ns) {
   }
   fov << param_val[0], param_val[1];
 
+  param_name = ns + "/fov_vertical_offset";
+  if (!ros::param::get(param_name, fov_vertical_offset)) {
+    fov_vertical_offset = 0.0;
+  }
+
   param_val.clear();
   param_name = ns + "/resolution";
   if ((!ros::param::get(param_name, param_val)) || (param_val.size() != 2)) {
@@ -230,7 +235,7 @@ bool SensorParamsBase::loadParams(std::string ns) {
     width = 0;
     double h_lim_2 = fov[0] / 2;
     double v_lim_2 = fov[1] / 2;
-    for (double dv = -v_lim_2; dv < v_lim_2; dv += v_res) {
+    for (double dv = -v_lim_2 + fov_vertical_offset; dv < v_lim_2 + fov_vertical_offset; dv += v_res) {
       ++h;
       for (double dh = -h_lim_2; dh < h_lim_2; dh += h_res) {
         if (width == 0) {
@@ -493,7 +498,7 @@ bool SensorParamsBase::isInsideFOV(StateVec& state, Eigen::Vector3d& pos) {
     float h_angle = std::atan2((float)pos_S.y(), (float)pos_S.x());
     float v_angle = std::asin((float)pos_S.z() / pos_S_norm);
     if ((std::abs(h_angle) > (fov[0] / 2)) ||
-        (std::abs(v_angle) > (fov[1] / 2)))
+        (std::abs(v_angle - fov_vertical_offset) > (fov[1] / 2)))
       return false;
   } else {
     // Unsupported sensor.
